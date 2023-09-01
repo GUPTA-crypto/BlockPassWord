@@ -1,0 +1,19 @@
+pragma solidity ^0.8.0;
+
+contract PasswordManager {
+    struct Password {
+        string encryptedPassword;
+        string hint;
+    }
+
+    mapping(address => Password) private passwords;
+
+    function storePassword(string memory encryptedPassword, string memory hint) public {
+        passwords[msg.sender] = Password(encryptedPassword, hint);
+    }
+
+    function getPassword() public view returns (string memory, string memory) {
+        Password memory password = passwords[msg.sender];
+        return (password.encryptedPassword, password.hint);
+    }
+}
